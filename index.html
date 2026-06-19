@@ -654,7 +654,7 @@ async function doSubmit() {
   const sid = document.getElementById('si').value.trim();
   const pct = Math.round(total / max * 100);
 
-  const SHEET_URL = 'https://script.google.com/macros/library/d/1g21skpZ2x7jk4OH5atQAroE_XchmV2e7FF6epieDvKklhowDeHmyZ_OS/1';
+  const SHEET_URL = 'https://script.google.com/macros/s/AKfycbwFle66wl0bf3JGV7YsRKDisxAIEfjiHaFzXHq37h1OpUEaxCpjzNQWDKkEo3_Weu1b/exec';
   const payload = {
     name, studentId: sid, violations,
     t1Answer: document.querySelector('input[name="t1"]:checked')?.value || '',
