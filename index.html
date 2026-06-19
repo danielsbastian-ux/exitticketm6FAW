@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Exit Ticket – Meeting 6 | Academic Writing</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,700;1,400&display=swap');
+
+  :root {
+    --bg: #09090b;
+    --s1: #111113;
+    --s2: #18181b;
+    --border: rgba(255,255,255,.08);
+    --border2: rgba(255,255,255,.14);
+    --text: #fafafa;
+    --muted: #71717a;
+    --blue: #60a5fa;
+    --violet: #a78bfa;
+    --amber: #fbbf24;
+    --red: #f87171;
+    --green: #4ade80;
+    --r: 14px;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg); color: var(--text);
+    min-height: 100vh; overflow-x: hidden;
+  }
+
+  /* Animated top stripe */
+  .stripe {
+    height: 4px; width: 100%;
+    background: linear-gradient(90deg, var(--blue), var(--violet), var(--amber), var(--blue));
+    background-size: 200% 100%;
+    animation: stripe 3s linear infinite;
+    position: fixed; top: 0; z-index: 100;
+  }
+  @keyframes stripe { from { background-position: 0% 0%; } to { background-position: 200% 0%; } }
+
+  /* Noise texture overlay */
+  body::after {
+    content: ''; position: fixed; inset: 0; z-index: 0; pointer-events: none;
+    opacity: .018;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size: 200px;
+  }
+
+  .wrap {
+    position: relative; z-index: 1;
+    max-width: 780px; margin: 0 auto;
+    padding: 72px 20px 80px;
+  }
+
+  /* Header */
+  .page-header { margin-bottom: 40px; }
+  .page-header .meta {
+    display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+    margin-bottom: 16px;
+  }
+  .tag {
+    font-size: 10px; font-weight: 700; letter-spacing: .1em;
+    text-transform: uppercase; padding: 4px 10px; border-radius: 20px;
+  }
+  .tag-blue  { background: rgba(96,165,250,.12); color: var(--blue);   border: 1px solid rgba(96,165,250,.25); }
+  .tag-vio   { background: rgba(167,139,250,.12); color: var(--violet); border: 1px solid rgba(167,139,250,.25); }
+  .tag-amb   { background: rgba(251,191,36,.12);  color: var(--amber);  border: 1px solid rgba(251,191,36,.25); }
+
+  .page-header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(26px, 5vw, 40px); line-height: 1.15;
+    background: linear-gradient(120deg, #fff 50%, var(--blue));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    margin-bottom: 8px;
+  }
+  .page-header p { font-size: 14px; color: var(--muted); line-height: 1.65; }
+
+  /* Timer */
+  .timer-panel {
+    display: flex; align-items: center; gap: 20px; flex-wrap: wrap;
+    background: var(--s1); border: 1px solid var(--border2);
+    border-radius: var(--r); padding: 16px 22px; margin-bottom: 32px;
+  }
+  .td { font-size: 10px; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); margin-bottom: 3px; }
+  .tv { font-size: 34px; font-weight: 700; letter-spacing: .06em; color: var(--green); transition: color .3s; }
+  .tv.w { color: var(--amber); }
+  .tv.d { color: var(--red); animation: blink .5s ease-in-out infinite alternate; }
+  @keyframes blink { from{opacity:1;} to{opacity:.4;} }
+  .t-bar { flex:1; min-width:120px; height:4px; background:rgba(255,255,255,.07); border-radius:99px; overflow:hidden; }
+  .t-prog { height:100%; border-radius:99px; background:linear-gradient(90deg,var(--green),var(--blue)); transition:width 1s linear; }
+
+  /* Student info */
+  .sinfo { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 32px; }
+  @media(max-width:500px){ .sinfo { grid-template-columns: 1fr; } }
+  .f label { display:block; font-size:11px; font-weight:600; letter-spacing:.08em; text-transform:uppercase; color:var(--blue); margin-bottom:6px; }
+  .f input {
+    width:100%; padding:11px 14px;
+    background:var(--s2); border:1px solid var(--border2);
+    border-radius:8px; color:var(--text);
+    font-family:'Inter',sans-serif; font-size:14px; outline:none;
+    transition:border-color .2s;
+  }
+  .f input:focus { border-color: var(--blue); }
+  .f input::placeholder { color: var(--muted); }
+
+  /* Task cards */
+  .task-card {
+    background: var(--s1); border: 1px solid var(--border);
+    border-radius: var(--r); padding: 28px;
+    margin-bottom: 20px; transition: border-color .3s;
+  }
+  .task-card:focus-within { border-color: rgba(96,165,250,.35); }
+  .task-num {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 11px; font-weight: 700; letter-spacing: .1em;
+    text-transform: uppercase; color: var(--violet); margin-bottom: 12px;
+  }
+  .task-num .dot {
+    width: 22px; height: 22px; border-radius: 50%;
+    background: rgba(167,139,250,.15); border: 1px solid rgba(167,139,250,.3);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; font-weight: 700;
+  }
+  .task-title {
+    font-size: 17px; font-weight: 600; line-height: 1.45;
+    margin-bottom: 6px;
+  }
+  .marks {
+    font-size: 12px; color: var(--amber); font-weight: 600; margin-bottom: 16px;
+  }
+
+  /* Passage */
+  .passage {
+    background: rgba(255,255,255,.03); border-left: 3px solid var(--blue);
+    border-radius: 0 10px 10px 0; padding: 16px 18px; margin-bottom: 18px;
+  }
+  .passage p {
+    font-family: 'Playfair Display', serif; font-style: italic;
+    font-size: 15px; line-height: 1.8; color: rgba(255,255,255,.82);
+  }
+
+  /* Radio */
+  .opts { display: flex; flex-direction: column; gap: 8px; }
+  .opt {
+    display: flex; align-items: center; gap: 11px;
+    padding: 12px 16px; border: 1px solid var(--border);
+    border-radius: 10px; cursor: pointer;
+    transition: background .2s, border-color .2s; user-select: none;
+  }
+  .opt:hover { background: rgba(96,165,250,.07); border-color: var(--blue); }
+  .opt input { display:none; }
+  .optd {
+    width:17px; height:17px; border-radius:50%;
+    border:2px solid rgba(255,255,255,.25); flex-shrink:0;
+    position:relative; transition:border-color .2s;
+  }
+  .optd::after {
+    content:''; position:absolute; top:50%; left:50%;
+    transform:translate(-50%,-50%) scale(0);
+    width:7px; height:7px; border-radius:50%;
+    background:var(--blue); transition:transform .18s;
+  }
+  .opt.sel { background:rgba(96,165,250,.1); border-color:var(--blue); }
+  .opt.sel .optd { border-color:var(--blue); }
+  .opt.sel .optd::after { transform:translate(-50%,-50%) scale(1); }
+  .opt-label { font-size:14px; line-height:1.5; }
+  .opt-letter {
+    width:24px; height:24px; border-radius:6px; background:rgba(255,255,255,.07);
+    display:flex; align-items:center; justify-content:center;
+    font-size:12px; font-weight:700; color:var(--muted); flex-shrink:0;
+  }
+
+  /* Fill-blank */
+  .blank-text {
+    font-size: 15px; line-height: 2.2;
+    font-family: 'Playfair Display', serif; font-style: italic;
+    color: rgba(255,255,255,.82);
+    background: rgba(255,255,255,.03); border-radius: 10px;
+    padding: 16px 18px; margin-bottom: 16px;
+  }
+  .blank {
+    display: inline-block;
+    border-bottom: 2px solid var(--blue);
+    min-width: 180px; padding: 0 4px;
+    background: transparent;
+    color: var(--amber); font-family: 'Inter', sans-serif;
+    font-style: normal; font-size: 15px; font-weight: 600;
+    outline: none; vertical-align: baseline;
+    transition: border-color .2s;
+  }
+  .blank:focus { border-color: var(--violet); }
+  .blank::placeholder { color: rgba(255,255,255,.2); font-weight:400; font-style:italic; }
+  .blank-note { font-size: 12px; color: var(--muted); margin-bottom: 12px; }
+
+  /* Textarea */
+  textarea {
+    width:100%; padding:14px;
+    background:var(--s2); border:1px solid var(--border2);
+    border-radius:10px; color:var(--text);
+    font-family:'Inter',sans-serif; font-size:14px;
+    line-height:1.75; resize:vertical; min-height:100px; outline:none;
+    transition:border-color .2s;
+  }
+  textarea:focus { border-color: var(--blue); }
+  textarea::placeholder { color:var(--muted); }
+  .wc { font-size:11px; color:var(--muted); text-align:right; margin-top:4px; }
+
+  /* Submit */
+  .sub-wrap { margin-top:44px; text-align:center; }
+  .btn-sub {
+    padding:15px 64px; border:none; border-radius:50px; cursor:pointer;
+    background:linear-gradient(135deg,var(--violet),var(--blue));
+    color:#fff; font-family:'Inter',sans-serif; font-size:15px;
+    font-weight:700; letter-spacing:.05em;
+    box-shadow:0 4px 28px rgba(167,139,250,.35);
+    transition:transform .2s, box-shadow .2s;
+  }
+  .btn-sub:hover { transform:translateY(-2px); box-shadow:0 8px 36px rgba(167,139,250,.45); }
+
+  /* Confirm modal */
+  .ov { display:none; position:fixed; inset:0; background:rgba(0,0,0,.82); backdrop-filter:blur(8px); z-index:1000; align-items:center; justify-content:center; }
+  .ov.show { display:flex; }
+  .mdl {
+    background:var(--s1); border:1px solid var(--border2);
+    border-radius:18px; padding:34px 28px; max-width:360px; width:90%;
+    text-align:center; animation:popIn .28s cubic-bezier(.34,1.56,.64,1);
+  }
+  @keyframes popIn { from{transform:scale(.82);opacity:0;} to{transform:scale(1);opacity:1;} }
+  .mdl h3 { font-size:19px; margin-bottom:8px; }
+  .mdl p  { font-size:13px; color:var(--muted); line-height:1.65; margin-bottom:24px; }
+  .mdl-btns { display:flex; gap:10px; justify-content:center; }
+  .mdl-btns button {
+    padding:11px 28px; border-radius:50px; border:none;
+    font-family:'Inter',sans-serif; font-size:14px;
+    font-weight:600; cursor:pointer; transition:opacity .15s;
+  }
+  .mdl-btns button:hover { opacity:.85; }
+  .by { background:var(--violet); color:#fff; }
+  .bn { background:rgba(255,255,255,.09); color:#fff; }
+
+  /* Cheat wall */
+  .cw {
+    display:none; position:fixed; inset:0; background:#060000; z-index:9999;
+    flex-direction:column; align-items:center; justify-content:center;
+    gap:14px; text-align:center; padding:36px;
+  }
+  .cw.show { display:flex; }
+  .cw .vn { font-size:56px; font-weight:700; color:var(--amber); }
+  .cw h2  { color:var(--red); font-size:26px; }
+  .cw p   { color:#bbb; font-size:14px; max-width:420px; line-height:1.7; }
+  .cw-dis {
+    margin-top:8px; padding:12px 34px;
+    background:var(--red); color:#fff; border:none;
+    border-radius:50px; font-size:14px; font-weight:700; cursor:pointer;
+  }
+
+  /* Sending */
+  .snd { display:none; position:fixed; inset:0; background:rgba(0,0,0,.9); z-index:6000; flex-direction:column; align-items:center; justify-content:center; gap:16px; }
+  .snd.show { display:flex; }
+  .spn { width:42px; height:42px; border-radius:50%; border:3px solid rgba(255,255,255,.1); border-top-color:var(--blue); animation:spin 1s linear infinite; }
+  @keyframes spin { to{transform:rotate(360deg);} }
+  .pbw { width:260px; height:4px; background:rgba(255,255,255,.1); border-radius:99px; overflow:hidden; }
+  .pbf { height:100%; background:var(--blue); border-radius:99px; width:0; transition:width .4s; }
+
+  /* Result page */
+  #rp {
+    display:none; position:fixed; inset:0;
+    background:var(--bg); z-index:5000;
+    overflow-y:auto; padding:60px 20px 80px;
+    animation:fi .5s ease;
+  }
+  @keyframes fi { from{opacity:0;} to{opacity:1;} }
+  #rp.show { display:block; }
+  .rw { max-width:720px; margin:0 auto; }
+  .rh { text-align:center; margin-bottom:40px; }
+  .sc {
+    width:116px; height:116px; border-radius:50%;
+    background:conic-gradient(var(--green) 0deg, rgba(255,255,255,.07) 0deg);
+    display:flex; align-items:center; justify-content:center;
+    margin:0 auto 18px; font-size:32px; font-weight:700;
+  }
+  .rh h2 { font-family:'Playfair Display',serif; font-size:28px; margin-bottom:6px; }
+  .rh p  { color:var(--muted); font-size:14px; }
+
+  .ri {
+    background:var(--s1); border:1px solid var(--border);
+    border-radius:var(--r); padding:22px; margin-bottom:14px;
+  }
+  .rl { font-size:10px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--muted); margin-bottom:8px; }
+  .ra { font-size:14px; padding:10px 12px; background:rgba(255,255,255,.04); border-radius:8px; white-space:pre-wrap; line-height:1.65; }
+  .rc { font-size:14px; padding:10px 12px; border-radius:8px; margin-top:10px; line-height:1.65; }
+  .rok { background:rgba(74,222,128,.09); border-left:3px solid var(--green); }
+  .rpm { background:rgba(251,191,36,.09); border-left:3px solid var(--amber); }
+  .rno { background:rgba(248,113,113,.09); border-left:3px solid var(--red); }
+  .sp { display:inline-block; padding:3px 9px; border-radius:12px; font-size:10px; font-weight:700; margin-left:8px; }
+  .sok { background:rgba(74,222,128,.18); color:var(--green); }
+  .spm { background:rgba(251,191,36,.18); color:var(--amber); }
+  .sno { background:rgba(248,113,113,.18); color:var(--red); }
+</style>
+</head>
+<body>
+<div class="stripe"></div>
+
+<!-- Cheat wall -->
+<div class="cw" id="cw">
+  <div class="vn" id="vn">⚠️</div>
+  <h2>Tab Navigation Detected</h2>
+  <p>This incident has been logged. Remain on this assessment page. Repeated violations will be noted in your submission record.</p>
+  <button class="cw-dis" onclick="document.getElementById('cw').classList.remove('show')">Return to Exit Ticket</button>
+</div>
+
+<!-- Confirm modal -->
+<div class="ov" id="ov">
+  <div class="mdl">
+    <h3>Ready to submit?</h3>
+    <p>Your answers will be sent to your lecturer once you confirm. This action cannot be undone.</p>
+    <div class="mdl-btns">
+      <button class="by" onclick="doSubmit()">Yes</button>
+      <button class="bn" onclick="document.getElementById('ov').classList.remove('show')">No</button>
+    </div>
+  </div>
+</div>
+
+<!-- Sending -->
+<div class="snd" id="snd">
+  <div class="spn"></div>
+  <p style="color:var(--muted);font-size:13px;">Sending to Google Sheets…</p>
+  <div class="pbw"><div class="pbf" id="pbf"></div></div>
+</div>
+
+<!-- Results -->
+<div id="rp">
+  <div class="rw">
+    <div class="rh">
+      <div class="sc" id="sc">–</div>
+      <h2 id="rName">Results</h2>
+      <p id="rSub"></p>
+    </div>
+    <div id="rItems"></div>
+  </div>
+</div>
+
+<!-- MAIN -->
+<div class="wrap" id="mc">
+
+  <div class="page-header">
+    <div class="meta">
+      <span class="tag tag-blue">ELLE 2208</span>
+      <span class="tag tag-vio">Exit Ticket</span>
+      <span class="tag tag-amb">Meeting 6</span>
+    </div>
+    <h1>Exit Ticket</h1>
+    <p>Four short tasks — approximately 12–15 minutes. Complete individually. Submit before leaving class.</p>
+  </div>
+
+  <!-- Timer -->
+  <div class="timer-panel">
+    <div>
+      <div class="td">Time Remaining</div>
+      <div class="tv" id="tv">15:00</div>
+    </div>
+    <div class="t-bar"><div class="t-prog" id="tprog"></div></div>
+    <div style="font-size:12px;color:var(--muted);">~15 minutes</div>
+  </div>
+
+  <!-- Student -->
+  <div class="sinfo">
+    <div class="f"><label>Full Name</label><input type="text" id="sn" placeholder="e.g. Budi Santoso" autocomplete="off"></div>
+    <div class="f"><label>Student ID</label><input type="text" id="si" placeholder="e.g. 202310055" autocomplete="off"></div>
+  </div>
+
+  <!-- Task 1 -->
+  <div class="task-card" id="tc1">
+    <div class="task-num"><div class="dot">1</div>Task 1 — Pattern Identification</div>
+    <div class="task-title">Read the paragraph and select the organizational pattern it uses.</div>
+    <div class="marks">1 mark</div>
+
+    <div class="passage">
+      <p>Rapid urbanization in Indonesian cities has triggered a chain of housing-related problems. The influx of migrants seeking work has intensified demand for affordable housing, which has in turn driven up rental prices across city centers. This price surge has forced lower-income residents to relocate to the urban periphery, which then increases commuting distances. Longer commutes consequently lead to greater traffic congestion, which generates higher carbon emissions, worsening the urban air quality that already affects millions of city dwellers.</p>
+    </div>
+
+    <p style="font-size:13px;color:var(--muted);margin-bottom:12px;">This paragraph uses the organizational pattern of:</p>
+    <div class="opts">
+      <label class="opt" onclick="sel(this,'t1')"><input type="radio" name="t1" value="focus-on-causes"><div class="optd"></div><div class="opt-letter">A</div><span class="opt-label">Focus-on-Causes — the paragraph lists the reasons behind a situation</span></label>
+      <label class="opt" onclick="sel(this,'t1')"><input type="radio" name="t1" value="focus-on-effects"><div class="optd"></div><div class="opt-letter">B</div><span class="opt-label">Focus-on-Effects — the paragraph lists the outcomes of a situation</span></label>
+      <label class="opt" onclick="sel(this,'t1')"><input type="radio" name="t1" value="causal-chain"><div class="optd"></div><div class="opt-letter">C</div><span class="opt-label">Causal Chain — each event triggers the next in a linked sequence</span></label>
+    </div>
+  </div>
+
+  <!-- Task 2 -->
+  <div class="task-card" id="tc2">
+    <div class="task-num"><div class="dot">2</div>Task 2 — Signal Word Application</div>
+    <div class="task-title">Fill in the two blanks with appropriate cause-and-effect signal expressions. Use a <em>different</em> expression in each blank.</div>
+    <div class="marks">2 marks (1 mark each)</div>
+
+    <div class="blank-note">Type directly into the underlined blanks within the paragraph below.</div>
+
+    <div class="blank-text">
+      The introduction of cashless payment systems in Indonesian markets has had several notable outcomes.
+      <input class="blank" id="b1" type="text" placeholder="signal expression (1)">
+      , many small vendors have had to purchase new point-of-sale devices, increasing their operating costs.
+      <input class="blank" id="b2" type="text" placeholder="signal expression (2)">
+      , consumers have reported spending more than intended because digital transactions feel less tangible than cash payments.
+      These findings suggest that the shift to cashless systems carries both financial and psychological implications for market participants.
+    </div>
+  </div>
+
+  <!-- Task 3 -->
+  <div class="task-card" id="tc3">
+    <div class="task-num"><div class="dot">3</div>Task 3 — Reflection</div>
+    <div class="task-title">Answer in 2–3 sentences.</div>
+    <div class="marks">1 mark</div>
+
+    <div class="passage" style="border-color:var(--violet);margin-bottom:16px;">
+      <p>Which organizational pattern did you use in your in-class paragraph today? Explain in one sentence <em>why</em> you chose that pattern for your topic, and identify ONE specific thing you would improve in your paragraph if you had more time.</p>
+    </div>
+
+    <textarea id="t3" placeholder="e.g. I used the focus-on-causes pattern because my topic — air pollution — has multiple distinct root causes that needed separate explanation. If I had more time, I would strengthen my concluding sentence to connect back to the thesis more explicitly." oninput="wc(this,'t3wc')"></textarea>
+    <div class="wc" id="t3wc">0 words</div>
+  </div>
+
+  <!-- Task 4 – additional blanks: sentence structure & double-space correction -->
+  <div class="task-card" id="tc4">
+    <div class="task-num"><div class="dot">4</div>Task 4 — Structure & Mechanics</div>
+    <div class="task-title">Complete the blanks to test sentence structure and correct an accidental double‑space error.</div>
+    <div class="marks">2 marks (1 mark each)</div>
+
+    <div class="blank-note">Blank A – sentence structure: choose a logical connector. Blank B – mechanics: rewrite the phrase with a single space.</div>
+
+    <div class="blank-text">
+      <strong>Blank A:</strong> The budget was unexpectedly cut;
+      <input class="blank" id="b3" type="text" placeholder="connector (e.g. therefore)">
+      , the team had to downsize the project significantly.<br><br>
+      <strong>Blank B:</strong> Original: "The researchers  published their findings in a top journal."<br>
+      Correct the double space by typing the corrected phrase: 
+      <input class="blank" id="b4" type="text" placeholder="researchers published">
+    </div>
+  </div>
+
+  <div class="sub-wrap">
+    <button class="btn-sub" onclick="trySubmit()">Submit</button>
+  </div>
+</div>
+
+<script>
+// Timer (15 minutes)
+const TOTAL = 15 * 60; let rem = TOTAL; let tInt; let submitted = false;
+tInt = setInterval(() => {
+  rem--;
+  const m = Math.floor(rem / 60), s = rem % 60;
+  const el = document.getElementById('tv');
+  el.textContent = `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+  const pct = rem / TOTAL * 100;
+  document.getElementById('tprog').style.width = pct + '%';
+  el.className = 'tv';
+  if (pct <= 25) el.classList.add('w');
+  if (pct <= 10) { el.classList.remove('w'); el.classList.add('d'); }
+  if (rem <= 0) { clearInterval(tInt); trySubmit(); }
+}, 1000);
+
+// Radio selection
+function sel(el, nm) {
+  document.querySelectorAll(`input[name="${nm}"]`).forEach(r => r.closest('.opt').classList.remove('sel'));
+  el.classList.add('sel');
+  el.querySelector('input').checked = true;
+}
+
+// Word count
+function wc(el, id) {
+  const w = el.value.trim().split(/\s+/).filter(Boolean).length;
+  document.getElementById(id).textContent = w + ' word' + (w === 1 ? '' : 's');
+}
+
+// Anti-cheat
+let violations = 0;
+function flag() {
+  if (submitted) return;
+  violations++;
+  document.getElementById('vn').textContent = '⚠️ Violation #' + violations;
+  document.getElementById('cw').classList.add('show');
+}
+document.addEventListener('visibilitychange', () => { if (document.hidden) flag(); });
+window.addEventListener('blur', flag);
+
+// Validate
+function validate() {
+  const miss = [];
+  if (!document.getElementById('sn').value.trim()) miss.push('Full Name');
+  if (!document.getElementById('si').value.trim()) miss.push('Student ID');
+  if (!document.querySelector('input[name="t1"]:checked')) miss.push('Task 1 — pattern selection');
+  if (!document.getElementById('b1').value.trim()) miss.push('Task 2 — Blank 1');
+  if (!document.getElementById('b2').value.trim()) miss.push('Task 2 — Blank 2');
+  if (!document.getElementById('t3').value.trim()) miss.push('Task 3 — Reflection');
+  if (!document.getElementById('b3').value.trim()) miss.push('Task 4 — Blank A (structure)');
+  if (!document.getElementById('b4').value.trim()) miss.push('Task 4 — Blank B (double space)');
+  return miss;
+}
+
+function trySubmit() {
+  if (submitted) return;
+  const m = validate();
+  if (m.length) {
+    alert('Please complete all questions before submitting:\n\n• ' + m.join('\n• '));
+    return;
+  }
+  document.getElementById('ov').classList.add('show');
+}
+
+// ── Scoring ──
+// Task 2: signal expressions – accept many variations, also handle accidental double spaces
+const EFFECT_SIGS = [
+  'as a result', 'consequently', 'therefore', 'thus', 'hence', 'as a consequence',
+  'in addition', 'furthermore', 'additionally', 'first', 'second', 'another outcome is',
+  'a further consequence is', 'as a direct result', 'this has led to', 'which has produced',
+  'a major consequence', 'accordingly', 'for this reason', 'on account of this',
+  'because of this', 'due to this', 'in turn', 'this means that', 'this implies that',
+  'by extension', 'as such', 'given this', 'following this', 'subsequently'
+];
+
+function normalizeSpaces(str) {
+  return str.replace(/\s+/g, ' ').trim().toLowerCase().replace(/[,;:.]+$/, '');
+}
+
+function matchSignal(input) {
+  if (!input) return 0;
+  const a = normalizeSpaces(input);
+  for (const s of EFFECT_SIGS) {
+    if (a === s || a.startsWith(s)) return 1;
+  }
+  const words = a.split(/\s+/);
+  for (const s of EFFECT_SIGS) {
+    const sw = s.split(/\s+/);
+    const overlap = words.filter(w => sw.includes(w) && w.length > 3).length;
+    if (overlap >= 1 && words.length <= 6) return 0.5;
+  }
+  return 0;
+}
+
+// Task 3: reflection rubric
+function scoreReflection(text) {
+  if (!text || text.trim().length < 20) return 0;
+  const t = text.toLowerCase();
+  const patternMentioned = /focus.on.cause|focus.on.effect|causal chain|listing|cause.effect|pattern|organiz/.test(t);
+  const whyMentioned = /because|since|as|reason|chose|choice|decided|works well|best|suited|fits|appropriate|helps/.test(t);
+  const improveMentioned = /improve|change|revise|better|stronger|add|include|more|clearer|expand|rework|next time|if i had/.test(t);
+  const wordCount = text.trim().split(/\s+/).length;
+  if (patternMentioned && whyMentioned && improveMentioned && wordCount >= 25) return 1;
+  if ((patternMentioned || whyMentioned) && improveMentioned) return 0.75;
+  if (patternMentioned || improveMentioned) return 0.5;
+  if (wordCount >= 20) return 0.25;
+  return 0;
+}
+
+// Task 4: structure connector (blank A)
+const STRUCT_CONNECTORS = [
+  'as a result', 'consequently', 'therefore', 'thus', 'hence', 'as a consequence',
+  'for this reason', 'accordingly', 'so', 'because of this', 'due to this'
+];
+
+function scoreStructure(input) {
+  if (!input) return 0;
+  const a = normalizeSpaces(input);
+  for (const s of STRUCT_CONNECTORS) {
+    if (a === s || a.startsWith(s)) return 1;
+  }
+  // fuzzy match
+  const words = a.split(/\s+/);
+  for (const s of STRUCT_CONNECTORS) {
+    const sw = s.split(/\s+/);
+    const overlap = words.filter(w => sw.includes(w) && w.length > 3).length;
+    if (overlap >= 1 && words.length <= 4) return 0.5;
+  }
+  return 0;
+}
+
+// Task 4: double-space correction (blank B) – normalize spaces and compare
+function scoreDoubleSpace(input) {
+  if (!input) return 0;
+  const corrected = normalizeSpaces(input); // collapses multiple spaces, trims
+  if (corrected === 'researchers published') return 1;
+  // Accept minor variations (capitalization, punctuation)
+  if (corrected === 'researchers published.') return 1;
+  // If the student wrote "researchers  published" with double space, normalizeSpaces fixes it
+  // Also accept "the researchers published" etc.
+  if (corrected.includes('researchers published')) return 0.5;
+  return 0;
+}
+
+function scoreAll() {
+  const results = []; let total = 0;
+
+  // T1
+  const t1 = document.querySelector('input[name="t1"]:checked')?.value || '';
+  const s1 = t1 === 'causal-chain' ? 1 : 0;
+  total += s1;
+  results.push({
+    q: 'Task 1 — Pattern Identification', max: 1, score: s1,
+    answer: `Selected: ${t1 || '(no answer)'}`,
+    correction: '<strong>Correct answer: C — Causal Chain.</strong> Each sentence describes an event that directly triggers the next: urbanization → increased demand → higher rents → relocation → longer commutes → congestion → emissions. The linking phrases <em>"which has in turn," "which then," "consequently"</em> all signal a chain structure, not a simple list of causes or effects.'
+  });
+
+  // T2
+  const b1v = document.getElementById('b1').value;
+  const b2v = document.getElementById('b2').value;
+  const s2a = matchSignal(b1v);
+  const b2Same = normalizeSpaces(b2v) === normalizeSpaces(b1v);
+  const s2b = b2Same ? 0 : matchSignal(b2v);
+  const s2 = s2a + s2b;
+  total += s2;
+  results.push({
+    q: 'Task 2 — Signal Word Application', max: 2, score: s2,
+    answer: `Blank 1: "${b1v || '—'}"\nBlank 2: "${b2v || '—'}"`,
+    correction: 'Both blanks require <strong>effect signal expressions</strong> (because the sentence that follows describes an outcome). Accepted examples for Blank 1: <em>As a result / Consequently / As a direct result / Therefore</em>. Accepted examples for Blank 2: <em>In addition / Furthermore / Additionally / Another outcome is / Moreover</em>. The two expressions must be <strong>different</strong> from each other. Accidental double spaces are ignored.'
+  });
+
+  // T3
+  const t3 = document.getElementById('t3').value;
+  const s3 = scoreReflection(t3);
+  total += s3;
+  results.push({
+    q: 'Task 3 — Reflection', max: 1, score: s3,
+    answer: t3 || '(no answer)',
+    correction: 'A strong reflection: (1) names the specific pattern used, (2) explains the choice with reference to the topic, and (3) names one specific, actionable improvement. Vague improvements like "make it better" do not earn full marks.'
+  });
+
+  // T4
+  const b3v = document.getElementById('b3').value;
+  const b4v = document.getElementById('b4').value;
+  const s4a = scoreStructure(b3v);
+  const s4b = scoreDoubleSpace(b4v);
+  const s4 = s4a + s4b;
+  total += s4;
+  results.push({
+    q: 'Task 4 — Structure & Mechanics', max: 2, score: s4,
+    answer: `Blank A (structure): "${b3v || '—'}"\nBlank B (double space): "${b4v || '—'}"`,
+    correction: 'Blank A: a logical consequence connector (<em>therefore, consequently, as a result</em>) is needed. Blank B: the corrected phrase should be <em>"researchers published"</em> with a single space. Accidental extra spaces in your answer are automatically normalized.'
+  });
+
+  return { results, total: Math.min(total, 6), max: 6 };
+}
+
+async function doSubmit() {
+  submitted = true; clearInterval(tInt);
+  document.getElementById('ov').classList.remove('show');
+  const so = document.getElementById('snd'); so.classList.add('show');
+  const pb = document.getElementById('pbf');
+  let p = 0; const pi = setInterval(() => { p = Math.min(p + 8, 90); pb.style.width = p + '%'; }, 160);
+
+  const { results, total, max } = scoreAll();
+  const name = document.getElementById('sn').value.trim();
+  const sid = document.getElementById('si').value.trim();
+  const pct = Math.round(total / max * 100);
+
+  const SHEET_URL = 'https://script.google.com/macros/s/AKfycbxaGeZzVAez0ek1I07s1F396A1Nrn7uaqH4A1WQRH5v-xXxRzq03Qa2eK5S83R_K9by/exec';
+  const payload = {
+    name, studentId: sid, violations,
+    t1Answer: document.querySelector('input[name="t1"]:checked')?.value || '',
+    t2Blank1: document.getElementById('b1').value,
+    t2Blank2: document.getElementById('b2').value,
+    t3Reflection: document.getElementById('t3').value,
+    t4Structure: document.getElementById('b3').value,
+    t4DoubleSpace: document.getElementById('b4').value,
+    score: total, maxScore: max, percentage: pct
+  };
+  try { await fetch(SHEET_URL, { method: 'POST', mode: 'no-cors', body: JSON.stringify(payload) }); } catch (e) {}
+
+  clearInterval(pi); pb.style.width = '100%';
+  await new Promise(r => setTimeout(r, 700)); so.classList.remove('show');
+
+  // Render results
+  const ri = document.getElementById('rItems'); ri.innerHTML = '';
+  results.forEach(r => {
+    const cl = r.score >= r.max ? 'rok' : r.score > 0 ? 'rpm' : 'rno';
+    const sl = r.score >= r.max ? 'sok' : r.score > 0 ? 'spm' : 'sno';
+    const st = r.score >= r.max ? 'Full marks' : r.score > 0 ? 'Partial' : 'Needs review';
+    ri.innerHTML += `<div class="ri">
+      <div class="rl">${r.q}<span class="sp ${sl}">${st} — ${r.score.toFixed(1)}/${r.max}</span></div>
+      <div class="ra">${r.answer}</div>
+      <div class="rc ${cl}"><strong>Feedback:</strong> ${r.correction}</div>
+    </div>`;
+  });
+
+  const sc = document.getElementById('sc');
+  const deg = pct / 100 * 360;
+  sc.style.background = `conic-gradient(var(--green) ${deg}deg, rgba(255,255,255,.07) ${deg}deg)`;
+  sc.textContent = pct + '%';
+  document.getElementById('rName').textContent =
+    pct >= 75 ? `🎉 Excellent work, ${name}!` :
+    pct >= 50 ? `👍 Good effort, ${name}!` :
+    `📚 Review needed, ${name}.`;
+  document.getElementById('rSub').textContent =
+    `Score: ${total.toFixed(1)} / ${max} marks · ${violations} tab violation(s) logged`;
+
+  document.getElementById('mc').style.display = 'none';
+  document.getElementById('rp').classList.add('show');
+}
+</script>
+</body>
+</html>
